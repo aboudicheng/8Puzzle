@@ -10,7 +10,7 @@ $(function () {
         })
     }, 3000);
 
-    $('.start-btn').click(function (e) {
+    $('#menu > .start-btn').click(function (e) {
         $('#menu').fadeOut('slow', function () {
             $('#image-page').fadeIn('slow', function () { ImageSelect(); });
         })
