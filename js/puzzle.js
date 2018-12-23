@@ -1,9 +1,10 @@
-var puzzle = [[], [], []];
-var x = 0, y = 0; //1's current position
+var puzzle = [[], [], []], realPuzzle = [[], [], []];
+var x = 0, y = 0, a = 0, b = 0; //1's current position
 
 for (var i = 0; i < 3; i++) {
     for (var j = 0; j < 3; j++) {
         puzzle[i][j] = i * 3 + j + 1;
+        realPuzzle[i][j] = i * 3 + j + 1;
     }
 }
 
@@ -24,6 +25,28 @@ function Puzzle() {
                     else {
                         path = shuffle(30);
                     }
+                    
+                    var coord;
+
+                    path.forEach((command, i) => {
+                        
+                        if (command === "right") {
+                            $(`.p${realPuzzle[a][b + 1]}`).delay(i * 1000).animate({ right: "+=154px"}, 1000)
+                        }
+                        else if (command === "left") {
+                            $(`.p${realPuzzle[a][b - 1]}`).delay(i * 1000).animate({ left: "+=154px"}, 1000)
+                        }
+                        else if (command === "up") {
+                            $(`.p${realPuzzle[a - 1][b]}`).delay(i * 1000).animate({ top: "+=154px"}, 1000)
+                        }
+                        else {
+                            $(`.p${realPuzzle[a + 1][b]}`).delay(i * 1000).animate({ bottom: "+=154px"}, 1000)
+                        }
+
+                        coord = shift(realPuzzle, command, a, b);
+                        a = coord.tileX;
+                        b = coord.tileY;
+                    })
                     console.log(path)
                 })
             });
@@ -38,32 +61,34 @@ function rand(length) {
     return Math.floor(Math.random() * length);
 }
 
-function shift(command) {
+function shift(puz, command, tileX, tileY) {
     var temp;
     if (command === "up") {
-        temp = puzzle[x - 1][y];
-        puzzle[x - 1][y] = puzzle[x][y];
-        puzzle[x][y] = temp;
-        x = x - 1;
+        temp = puz[tileX - 1][tileY];
+        puz[tileX - 1][tileY] = puz[tileX][tileY];
+        puz[tileX][tileY] = temp;
+        tileX = tileX - 1;
     }
     else if (command === "down") {
-        temp = puzzle[x + 1][y];
-        puzzle[x + 1][y] = puzzle[x][y];
-        puzzle[x][y] = temp;
-        x = x + 1;
+        temp = puz[tileX + 1][tileY];
+        puz[tileX + 1][tileY] = puz[tileX][tileY];
+        puz[tileX][tileY] = temp;
+        tileX = tileX + 1;
     }
     else if (command === "left") {
-        temp = puzzle[x][y - 1];
-        puzzle[x][y - 1] = puzzle[x][y];
-        puzzle[x][y] = temp;
-        y = y - 1;
+        temp = puz[tileX][tileY - 1];
+        puz[tileX][tileY - 1] = puz[tileX][tileY];
+        puz[tileX][tileY] = temp;
+        tileY = tileY - 1;
     }
     else {
-        temp = puzzle[x][y + 1];
-        puzzle[x][y + 1] = puzzle[x][y];
-        puzzle[x][y] = temp;
-        y = y + 1;
+        temp = puz[tileX][tileY + 1];
+        puz[tileX][tileY + 1] = puz[tileX][tileY];
+        puz[tileX][tileY] = temp;
+        tileY = tileY + 1;
     }
+
+    return {tileX, tileY}
 }
 
 //Returns an array with commands (right, left, up, down)
@@ -99,8 +124,9 @@ function shuffle(amount) {
         path.push(commands[ran])
 
         //Shift the elements
-        shift(commands[ran]);
-        console.log(puzzle)
+        var coord = shift(puzzle, commands[ran], x, y);
+        x = coord.tileX;
+        y = coord.tileY;
     }
 
     return path;
