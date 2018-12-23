@@ -78,29 +78,40 @@ function animate(path, i, speed) {
         $('#puzzle').hover(
             function () {
                 if (!check()) {
-                    $('.puz').css('opacity', 0.4);
+                    $('.puz').css({ opacity: 0.4, cursor: 'default' });
                     var movables = checkMovables();
                     console.log(movables)
                     movables.forEach(tile => {
-                        $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).click(function () {
+                        $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).one('click', function () {
                             switch (tile.command) {
                                 case "down":
-                                    $(this).animate({ top: "-=152px" }, 1000);
+                                    $(this).animate({ top: "-=152px" }, 1000, function() {
+                                        $(this).css({ opacity: 0.4, cursor: 'default' });
+                                    });
                                     break;
                                 case "up":
-                                    $(this).animate({ top: "+=152px" }, 1000);
+                                    $(this).animate({ top: "+=152px" }, 1000, function() {
+                                        $(this).css({ opacity: 0.4, cursor: 'default' });
+                                    });
                                     break;
                                 case "right":
-                                    $(this).animate({ right: "+=152px" }, 1000);
+                                    $(this).animate({ right: "+=152px" }, 1000, function() {
+                                        $(this).css({ opacity: 0.4, cursor: 'default' });
+                                    });
                                     break;
                                 case "left":
-                                    $(this).animate({ right: "-=152px" }, 1000);
+                                    $(this).animate({ right: "-=152px" }, 1000, function() {
+                                        $(this).css({ opacity: 0.4, cursor: 'default' });
+                                    });
                                     break;
                                 default: return;
                             }
                             path.push(tile.command);
                             x = tile.x;
                             y = tile.y;
+                            $(this).unbind('click');
+                            console.log(x)
+                            console.log(y)
                         })
                     })
                 }
