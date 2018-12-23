@@ -96,6 +96,7 @@ hr {
     border-radius: 5px;
     display: inline-block;
     margin: 1px;
+    position: relative;
 }
 
 #select {
