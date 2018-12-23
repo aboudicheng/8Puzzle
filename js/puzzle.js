@@ -1,10 +1,9 @@
-var puzzle = [[], [], []], realPuzzle = [[], [], []];
-var x = 0, y = 0, a = 0, b = 0; //1's current position
+var puzzle = [[], [], []];
+var x = 0, y = 0; //1's current position
 
 for (var i = 0; i < 3; i++) {
     for (var j = 0; j < 3; j++) {
         puzzle[i][j] = i * 3 + j + 1;
-        realPuzzle[i][j] = i * 3 + j + 1;
     }
 }
 
@@ -25,29 +24,18 @@ function Puzzle() {
                     else {
                         path = shuffle(30);
                     }
-                    
-                    var coord;
 
-                    path.forEach((command, i) => {
-                        
-                        if (command === "right") {
-                            $(`.p${realPuzzle[a][b + 1]}`).delay(i * 1000).animate({ right: "+=154px"}, 1000)
+                    for (var i = 0; i < 3; i++) {
+                        for (var j = 0; j < 3; j++) {
+                            puzzle[i][j] = i * 3 + j + 1;
                         }
-                        else if (command === "left") {
-                            $(`.p${realPuzzle[a][b - 1]}`).delay(i * 1000).animate({ left: "+=154px"}, 1000)
-                        }
-                        else if (command === "up") {
-                            $(`.p${realPuzzle[a - 1][b]}`).delay(i * 1000).animate({ top: "+=154px"}, 1000)
-                        }
-                        else {
-                            $(`.p${realPuzzle[a + 1][b]}`).delay(i * 1000).animate({ bottom: "+=154px"}, 1000)
-                        }
+                    }
 
-                        coord = shift(realPuzzle, command, a, b);
-                        a = coord.tileX;
-                        b = coord.tileY;
-                    })
+                    x = 0, y = 0;
+
                     console.log(path)
+
+                    animate(path, 0);
                 })
             });
         }
@@ -55,6 +43,38 @@ function Puzzle() {
             $('#select > .start-btn').hide();
         }
     })
+}
+
+function animate(path, i) {
+    if (i < path.length) {
+        if (path[i] === "right") {
+            $(`.p${puzzle[x][y + 1]}`).animate({ right: "+=152px"}, 1000, function() {
+                animate(path, ++i);
+            })
+        }
+        else if (path[i] === "left") {
+            $(`.p${puzzle[x][y - 1]}`).animate({ right: "-=152px"}, 1000, function() {
+                animate(path, ++i);
+            })
+        }
+        else if (path[i] === "up") {
+            $(`.p${puzzle[x - 1][y]}`).animate({ top: "+=152px"}, 1000, function() {
+                animate(path, ++i);
+            })
+        }
+        else {
+            $(`.p${puzzle[x + 1][y]}`).animate({ top: "-=152px"}, 1000, function() {
+                animate(path, ++i);
+            })
+        }
+
+        coord = shift(puzzle, path[i], x, y);
+        x = coord.tileX;
+        y = coord.tileY;
+    }
+    else {
+
+    }
 }
 
 function rand(length) {
