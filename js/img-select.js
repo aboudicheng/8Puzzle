@@ -13,7 +13,7 @@ function ImageSelect() {
             $(this).addClass('clicked', 'slow');
             $(this).siblings().each(function (j, pic) {
                 $(pic).removeClass('clicked', 'slow');
-            })
+            });
             $('#image-page > .start-btn').fadeIn('slow');
         })
     })

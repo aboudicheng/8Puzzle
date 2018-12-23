@@ -34,8 +34,9 @@ function Puzzle() {
                     x = 0, y = 0;
 
                     console.log(path)
+                    var speed = path.length === 30 ? 100 : 1000;
 
-                    animate(path, 0);
+                    animate(path, 0, speed);
                 })
             });
         }
@@ -45,26 +46,26 @@ function Puzzle() {
     })
 }
 
-function animate(path, i) {
+function animate(path, i, speed) {
     if (i < path.length) {
         if (path[i] === "right") {
-            $(`.p${puzzle[x][y + 1]}`).animate({ right: "+=152px"}, 1000, function() {
-                animate(path, ++i);
+            $(`.p${puzzle[x][y + 1]}`).animate({ right: "+=152px"}, speed, function() {
+                animate(path, ++i, speed);
             })
         }
         else if (path[i] === "left") {
-            $(`.p${puzzle[x][y - 1]}`).animate({ right: "-=152px"}, 1000, function() {
-                animate(path, ++i);
+            $(`.p${puzzle[x][y - 1]}`).animate({ right: "-=152px"}, speed, function() {
+                animate(path, ++i, speed);
             })
         }
         else if (path[i] === "up") {
-            $(`.p${puzzle[x - 1][y]}`).animate({ top: "+=152px"}, 1000, function() {
-                animate(path, ++i);
+            $(`.p${puzzle[x - 1][y]}`).animate({ top: "+=152px"}, speed, function() {
+                animate(path, ++i, speed);
             })
         }
         else {
-            $(`.p${puzzle[x + 1][y]}`).animate({ top: "-=152px"}, 1000, function() {
-                animate(path, ++i);
+            $(`.p${puzzle[x + 1][y]}`).animate({ top: "-=152px"}, speed, function() {
+                animate(path, ++i, speed);
             })
         }
 
@@ -73,7 +74,8 @@ function animate(path, i) {
         y = coord.tileY;
     }
     else {
-
+        console.log('finish')
+        $('#solve-puzzle').show().animate({ fontSize: '+=15px' }, 800);
     }
 }
 
