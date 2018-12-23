@@ -49,22 +49,22 @@ function Puzzle() {
 function animate(path, i, speed) {
     if (i < path.length) {
         if (path[i] === "right") {
-            $(`.p${puzzle[x][y + 1]}`).animate({ right: "+=152px"}, speed, function() {
+            $(`.p${puzzle[x][y + 1]}`).animate({ right: "+=152px" }, speed, function () {
                 animate(path, ++i, speed);
             })
         }
         else if (path[i] === "left") {
-            $(`.p${puzzle[x][y - 1]}`).animate({ right: "-=152px"}, speed, function() {
+            $(`.p${puzzle[x][y - 1]}`).animate({ right: "-=152px" }, speed, function () {
                 animate(path, ++i, speed);
             })
         }
         else if (path[i] === "up") {
-            $(`.p${puzzle[x - 1][y]}`).animate({ top: "+=152px"}, speed, function() {
+            $(`.p${puzzle[x - 1][y]}`).animate({ top: "+=152px" }, speed, function () {
                 animate(path, ++i, speed);
             })
         }
         else {
-            $(`.p${puzzle[x + 1][y]}`).animate({ top: "-=152px"}, speed, function() {
+            $(`.p${puzzle[x + 1][y]}`).animate({ top: "-=152px" }, speed, function () {
                 animate(path, ++i, speed);
             })
         }
@@ -74,9 +74,75 @@ function animate(path, i, speed) {
         y = coord.tileY;
     }
     else {
-        console.log('finish')
         $('#solve-puzzle').show().animate({ fontSize: '+=15px' }, 800);
+        $('#puzzle').hover(
+            function () {
+                if (!check()) {
+                    $('.puz').css('opacity', 0.4);
+                    var movables = checkMovables();
+                    console.log(movables)
+                    movables.forEach(tile => {
+                        $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).click(function () {
+                            switch (tile.command) {
+                                case "down":
+                                    $(this).animate({ top: "-=152px" }, 1000);
+                                    break;
+                                case "up":
+                                    $(this).animate({ top: "+=152px" }, 1000);
+                                    break;
+                                case "right":
+                                    $(this).animate({ right: "+=152px" }, 1000);
+                                    break;
+                                case "left":
+                                    $(this).animate({ right: "-=152px" }, 1000);
+                                    break;
+                                default: return;
+                            }
+                            path.push(tile.command);
+                            x = tile.x;
+                            y = tile.y;
+                        })
+                    })
+                }
+                else {
+                    console.log("congrats")
+                }
+            },
+            function () {
+                $('.puz').css('opacity', 1);
+            }
+        )
     }
+}
+
+function check() {
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+            if (puzzle[i][j] !== (i * 3 + j + 1)) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+function checkMovables() {
+    var commands = [];
+    if (x + 1 <= 2) {
+        commands.push({ x: x + 1, y, command: "down" })
+    }
+    if (x - 1 >= 0) {
+        commands.push({ x: x - 1, y, command: "up" })
+    }
+    if (y - 1 >= 0) {
+        commands.push({ x, y: y - 1, command: "left" })
+    }
+    if (y + 1 <= 2) {
+        commands.push({ x, y: y + 1, command: "right" })
+    }
+
+    return commands;
 }
 
 function rand(length) {
@@ -110,7 +176,7 @@ function shift(puz, command, tileX, tileY) {
         tileY = tileY + 1;
     }
 
-    return {tileX, tileY}
+    return { tileX, tileY }
 }
 
 //Returns an array with commands (right, left, up, down)
@@ -124,20 +190,20 @@ function shuffle(amount) {
         var commands = []
         //Push all possible paths
         if (!prev) {
-           prev ="nothing" ;
+            prev = "nothing";
         }
 
         if (x + 1 <= 2 && prev !== "up") {
-                commands.push("down")
+            commands.push("down")
         }
         if (x - 1 >= 0 && prev !== "down") {
-                commands.push("up")
+            commands.push("up")
         }
         if (y - 1 >= 0 && prev !== "right") {
-                commands.push("left")
+            commands.push("left")
         }
         if (y + 1 <= 2 && prev !== "left") {
-                commands.push("right")
+            commands.push("right")
         }
 
         var ran = rand(commands.length);
