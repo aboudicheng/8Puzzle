@@ -85,6 +85,64 @@ function traverse(command, speed, callback) {
     y = coord.tileY;
 }
 
+/**
+ * 
+ * @param {The direction to move} command 
+ * @param {Speed for animate function} speed 
+ * @param {Callback after animate finishes} callback 
+ */
+function backtrack(command, speed, callback) {
+    $('.puz').css({ opacity: 0.4, cursor: 'default' })
+    var backCommand;
+    switch (command) {
+        case "right":
+            $(`.p${puzzle[x][y - 1]}`).animate({ right: "-=152px" }, speed, function () {
+                callback();
+            });
+            backCommand = "left";
+            break;
+        case "left":
+            $(`.p${puzzle[x][y + 1]}`).animate({ right: "+=152px" }, speed, function () {
+                callback();
+            });
+            backCommand = "right";
+            break;
+        case "up":
+            $(`.p${puzzle[x + 1][y]}`).animate({ top: "-=152px" }, speed, function () {
+                callback();
+            });
+            backCommand = "down";
+            break;
+        case "down":
+            $(`.p${puzzle[x - 1][y]}`).animate({ top: "+=152px" }, speed, function () {
+                callback();
+            });
+            backCommand = "up";
+            break;
+        default: return;
+    }
+
+
+    coord = shift(backCommand, x, y);
+    console.log(coord)
+    x = coord.tileX;
+    y = coord.tileY;
+}
+
+//function that backtracks according to the path
+function solve(path) {
+    if (path.length > 0) {
+        backtrack(path.pop(), 100, function() {
+            console.log("backtracked")
+            solve(path);
+        })
+        
+    }
+    else {
+        console.log("solved")
+    }
+}
+
 //Shuffling animation
 function animate(path, i, speed) {
     if (i < path.length) {
@@ -93,6 +151,12 @@ function animate(path, i, speed) {
         })
     }
     else { //when shuffling finishes
+        $(window).keydown(function(e) {
+            e.preventDefault();
+            if (e.which === 112) {
+                solve(path);
+            }
+        })
         $('#solve-puzzle').show().animate({ fontSize: '+=15px' }, 800);
         $('.puz').css({ opacity: 1.0, cursor: 'default' })
         $('#puzzle').hover(
