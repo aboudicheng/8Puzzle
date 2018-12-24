@@ -2,13 +2,14 @@ var puzzle = [[], [], []];
 var x = 0, y = 0; //1's current position
 var coord;
 
+//Initialize the puzzle with values starting from 1 to 9
 for (var i = 0; i < 3; i++) {
     for (var j = 0; j < 3; j++) {
         puzzle[i][j] = i * 3 + j + 1;
     }
 }
 
-var choice;
+var choice; //from select option combo box
 
 function Puzzle() {
     $('select').change(function () {
@@ -79,6 +80,7 @@ function traverse(command, speed, callback) {
     }
 
     coord = shift(command, x, y);
+    console.log(coord)
     x = coord.tileX;
     y = coord.tileY;
 }
@@ -113,7 +115,7 @@ function play(path) {
             $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).one('click', function () {
                 traverse(tile.command, 1000, function () {
                     $('.puz').css({ opacity: 0.4, cursor: 'default' });
-                    $(this).css({ opacity: 1.0, cursor: 'pointer' });
+                    //$(this).css({ opacity: 1.0, cursor: 'pointer' });
                     play(path);
                 })
                 path.push(tile.command);
