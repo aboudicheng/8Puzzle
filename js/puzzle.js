@@ -46,85 +46,82 @@ function Puzzle() {
     })
 }
 
+/**
+ * 
+ * @param {The direction to move} command 
+ * @param {Speed for animate function} speed 
+ * @param {Callback after animate finishes} callback 
+ */
+function traverse(command, speed, callback) {
+    $('.puz').css({ opacity: 0.4, cursor: 'default' })
+    switch (command) {
+        case "right":
+            $(`.p${puzzle[x][y + 1]}`).animate({ right: "+=152px" }, speed, function () {
+                callback();
+            });
+            break;
+        case "left":
+            $(`.p${puzzle[x][y - 1]}`).animate({ right: "-=152px" }, speed, function () {
+                callback();
+            });
+            break;
+        case "up":
+            $(`.p${puzzle[x - 1][y]}`).animate({ top: "+=152px" }, speed, function () {
+                callback();
+            });
+            break;
+        case "down":
+            $(`.p${puzzle[x + 1][y]}`).animate({ top: "-=152px" }, speed, function () {
+                callback();
+            });
+            break;
+        default: return;
+    }
+
+    coord = shift(command, x, y);
+    x = coord.tileX;
+    y = coord.tileY;
+}
+
+//Shuffling animation
 function animate(path, i, speed) {
     if (i < path.length) {
-        if (path[i] === "right") {
-            $(`.p${puzzle[x][y + 1]}`).animate({ right: "+=152px" }, speed, function () {
-                animate(path, ++i, speed);
-            })
-        }
-        else if (path[i] === "left") {
-            $(`.p${puzzle[x][y - 1]}`).animate({ right: "-=152px" }, speed, function () {
-                animate(path, ++i, speed);
-            })
-        }
-        else if (path[i] === "up") {
-            $(`.p${puzzle[x - 1][y]}`).animate({ top: "+=152px" }, speed, function () {
-                animate(path, ++i, speed);
-            })
-        }
-        else {
-            $(`.p${puzzle[x + 1][y]}`).animate({ top: "-=152px" }, speed, function () {
-                animate(path, ++i, speed);
-            })
-        }
-
-        coord = shift(path[i], x, y);
-        x = coord.tileX;
-        y = coord.tileY;
+        traverse(path[i], speed, function () {
+            animate(path, ++i, speed);
+        })
     }
-    else {
+    else { //when shuffling finishes
         $('#solve-puzzle').show().animate({ fontSize: '+=15px' }, 800);
+        $('.puz').css({ opacity: 1.0, cursor: 'default' })
         $('#puzzle').hover(
             function () {
-                if (!check()) {
-                    $('.puz').css({ opacity: 0.4, cursor: 'default' });
-                    var movables = checkMovables();
-                    movables.forEach(tile => {
-                        console.log(tile)
-                        $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).one('click', function () {
-                            switch (tile.command) {
-                                case "down":
-                                    $(this).animate({ top: "-=152px" }, 1000, function () {
-                                        $('.puz').css({ opacity: 0.4, cursor: 'default' });
-                                    });
-                                    break;
-                                case "up":
-                                    $(this).animate({ top: "+=152px" }, 1000, function () {
-                                        $('.puz').css({ opacity: 0.4, cursor: 'default' });
-                                    });
-                                    break;
-                                case "right":
-                                    $(this).animate({ right: "+=152px" }, 1000, function () {
-                                        $('.puz').css({ opacity: 0.4, cursor: 'default' });
-                                    });
-                                    break;
-                                case "left":
-                                    $(this).animate({ right: "-=152px" }, 1000, function () {
-                                        $('.puz').css({ opacity: 0.4, cursor: 'default' });
-                                    });
-                                    break;
-                                default: return;
-                            }
-                            path.push(tile.command);
-                            console.log(path)
-                            coord = shift(tile.command, x, y);
-                            console.log(x);
-                            console.log(y);
-                            console.log(coord);
-                            x = coord.tileX;
-                            y = coord.tileY;
-                        })
-                    })
-                }
-                else {
-                    console.log("congrats")
-                }
+                play(path);
             },
             function () {
                 $('.puz').css('opacity', 1);
             }
         )
+    }
+}
+
+function play(path) {
+    console.log(path)
+    if (!check()) {
+        $('.puz').css({ opacity: 0.4, cursor: 'default' });
+        var movables = checkMovables();
+        movables.forEach(tile => {
+            $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).one('click', function () {
+                traverse(tile.command, 1000, function () {
+                    $('.puz').css({ opacity: 0.4, cursor: 'default' });
+                    $(this).css({ opacity: 1.0, cursor: 'pointer' });
+                    play(path);
+                })
+                path.push(tile.command);
+            })
+        })
+    }
+    else {
+        console.log("congrats")
     }
 }
 
