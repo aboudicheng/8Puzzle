@@ -10,9 +10,9 @@ function ImageSelect() {
         )
 
         $(item).click(function () {
-            $(this).addClass('clicked', 'slow');
+            $(this).addClass('clicked', 1000);
             $(this).siblings().each(function (j, pic) {
-                $(pic).removeClass('clicked', 'slow');
+                $(pic).removeClass('clicked', 1000);
             });
             $('#image-page > .start-btn').fadeIn('slow');
         })
@@ -29,7 +29,7 @@ function ImageSelect() {
                         image = 'img/cat.jpg';
                         break;
                     case 1:
-                        image = 'img/doge.jpg';
+                        image = 'img/meow.jpg';
                         break;
                     case 2:
                         image = 'img/pikachu.jpg';
