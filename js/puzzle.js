@@ -132,14 +132,17 @@ function backtrack(command, speed, callback) {
 //function that backtracks according to the path
 function solve(path) {
     if (path.length > 0) {
-        backtrack(path.pop(), 100, function() {
+        backtrack(path.pop(), 100, function () {
             console.log("backtracked")
             solve(path);
         })
-        
+
     }
     else {
-        console.log("solved")
+        $('#puzzle').unbind('mouseenter mouseleave');
+        $('.puz').css({ opacity: 0.4, cursor: 'default' });
+        $('#solve-puzzle').hide();
+        $('#congrats').show().animate({ fontSize: '+=20px', bottom: '+=350px' })
     }
 }
 
@@ -151,7 +154,8 @@ function animate(path, i, speed) {
         })
     }
     else { //when shuffling finishes
-        $(window).keydown(function(e) {
+        //If user presses F1
+        $(window).keydown(function (e) {
             e.preventDefault();
             if (e.which === 112) {
                 solve(path);
@@ -164,7 +168,12 @@ function animate(path, i, speed) {
                 play(path);
             },
             function () {
-                $('.puz').css('opacity', 1);
+                if (!check()) {
+                    $('.puz').css('opacity', 1);
+                }
+                else {
+                    $('.puz').css({ opacity: 0.4, cursor: 'default' });
+                }
             }
         )
     }
@@ -179,7 +188,7 @@ function play(path) {
             $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).one('click', function () {
                 traverse(tile.command, 1000, function () {
                     $('.puz').css({ opacity: 0.4, cursor: 'default' });
-                    //$(this).css({ opacity: 1.0, cursor: 'pointer' });
+                    $(this).css({ opacity: 1.0, cursor: 'pointer' });
                     play(path);
                 })
                 path.push(tile.command);
@@ -187,7 +196,10 @@ function play(path) {
         })
     }
     else {
-        console.log("congrats")
+        $('#puzzle').unbind('mouseenter mouseleave');
+        $('.puz').css({ opacity: 0.4, cursor: 'default' });
+        $('#solve-puzzle').hide();
+        $('#congrats').show().animate({ fontSize: '+=20px', bottom: '+=400px' })
     }
 }
 

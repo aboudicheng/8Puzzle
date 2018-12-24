@@ -106,3 +106,11 @@ hr {
 select {
     margin: 0 1em;
 }
+
+#congrats {
+    display: none;
+    margin-top: 2em;
+    position: relative;
+    color:black;
+    font-weight: bold
+}
