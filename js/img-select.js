@@ -2,10 +2,10 @@ function ImageSelect() {
     $('.image-selection').children().each(function (i, item) {
         $(item).hover(
             function () {
-                $(this).animate({ opacity: 1.0 }, 'fast');
+                $(this).animate({ opacity: 1.0 }, { queue: false }, 'fast');
             },
             function () {
-                $(this).animate({ opacity: 0.7 }, 'fast');
+                $(this).animate({ opacity: 0.7 }, { queue: false }, 'fast');
             }
         )
 
@@ -36,6 +36,9 @@ function ImageSelect() {
                         break;
                     default: return;
                 }
+                $(item).removeClass('clicked');
+                $('#image-page > .start-btn').hide();
+                $(item).unbind('mouseenter mouseleave');
             }
         })
 

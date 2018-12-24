@@ -133,7 +133,6 @@ function backtrack(command, speed, callback) {
 function solve(path) {
     if (path.length > 0) {
         backtrack(path.pop(), 100, function () {
-            console.log("backtracked")
             solve(path);
         })
 
@@ -143,6 +142,18 @@ function solve(path) {
         $('.puz').css({ opacity: 0.4, cursor: 'default' });
         $('#solve-puzzle').hide();
         $('#congrats').show().animate({ fontSize: '+=20px', bottom: '+=350px' })
+
+        $(window).keydown(function (e) {
+            e.preventDefault();
+            if (e.which === 116) {
+                $('#menu').show();
+                $('#puzzle').children().each(function (i, item) { $(item).remove() });
+                $('#puzzle-page').css('left', '-900px').hide();
+                $('#congrats').hide();
+                $('#image-page').css({ left: 0, opacity: 1 });
+                main();
+            }
+        })
     }
 }
 
