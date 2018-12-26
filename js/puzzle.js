@@ -155,7 +155,7 @@ function animate(path, i, speed) {
     }
     else { //when shuffling finishes
         //If user presses F1
-        $(window).one('keydown', function(e) {
+        $(window).one('keydown', function (e) {
             if (e.which === 27) {
                 solve(path);
             }
@@ -168,7 +168,7 @@ function animate(path, i, speed) {
             },
             function () {
                 if (!check()) {
-                    $('.puz').css('opacity', 1);
+                    $('.puz').css('opacity', 1).unbind('click');;
                 }
                 else {
                     $('.puz').css({ opacity: 0.4, cursor: 'default' });
@@ -179,6 +179,7 @@ function animate(path, i, speed) {
 }
 
 function play(path) {
+    console.log(path)
     if (!check()) {
         $('.puz').css({ opacity: 0.4, cursor: 'default' });
         var movables = checkMovables();

@@ -12,10 +12,10 @@ function main() {
 
     $('.start-btn').hover(
         function () {
-            $(this).css({ backgroundColor: "rgb(107, 145, 194)", color: "#000", fontWeight: "bold" })
+            $(this).animate({ backgroundColor: "rgb(107, 145, 194)", color: "#000" }, 200).css('font-weight', 'bold')
         },
         function () {
-            $(this).css({ backgroundColor: "#fff", color: "rgb(134, 134, 134)", fontWeight: "normal" })
+            $(this).animate({ backgroundColor: "#fff", color: "rgb(134, 134, 134)" }, 200).css('font-weight', 'normal')
         }
     )
 
