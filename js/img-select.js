@@ -65,7 +65,7 @@ function ImageSelect() {
                     $('#puzzle').append(`<div class="puz p${i * 3 + j + 1}" style="background: url('${image}') no-repeat ${j * -150}px ${i * -150}px"></div>`)
                 }
             }
-            $('#puzzle > .p1').css({ opacity: 0 })
+            $('#puzzle > .p1').css({ background: "none", height: "150px", width: "150px" })
         })
     })
 }
