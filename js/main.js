@@ -11,11 +11,11 @@ function main() {
     }, 3000);
 
     $('.start-btn').hover(
-        function() {
-            $(this).animate({ backgroundColor: "rgb(107, 145, 194)", color: "#000" }, 300).css('font-weight', 'bold')
+        function () {
+            $(this).css({ backgroundColor: "rgb(107, 145, 194)", color: "#000", fontWeight: "bold" })
         },
-        function() {
-            $(this).animate({ backgroundColor: "#fff", color: "rgb(134, 134, 134)" }, 300).css('font-weight', 'normal')
+        function () {
+            $(this).css({ backgroundColor: "#fff", color: "rgb(134, 134, 134)", fontWeight: "normal" })
         }
     )
 

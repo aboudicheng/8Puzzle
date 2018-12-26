@@ -80,7 +80,6 @@ function traverse(command, speed, callback) {
     }
 
     coord = shift(command, x, y);
-    console.log(coord)
     x = coord.tileX;
     y = coord.tileY;
 }
@@ -124,7 +123,6 @@ function backtrack(command, speed, callback) {
 
 
     coord = shift(backCommand, x, y);
-    console.log(coord)
     x = coord.tileX;
     y = coord.tileY;
 }
@@ -157,7 +155,7 @@ function animate(path, i, speed) {
     }
     else { //when shuffling finishes
         //If user presses F1
-        $(window).keydown(function (e) {
+        $(window).one('keydown', function(e) {
             if (e.which === 27) {
                 solve(path);
             }

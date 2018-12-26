@@ -2,19 +2,19 @@ function ImageSelect() {
     $('.image-selection').children().each(function (i, item) {
         $(item).hover(
             function () {
-                $(this).animate({ opacity: 1.0 }, { queue: false }, 'fast');
+                $(this).css({ opacity: 1.0 });
             },
             function () {
-                $(this).animate({ opacity: 0.7 }, { queue: false }, 'fast');
+                $(this).css({ opacity: 0.7 });
             }
         )
 
         $(item).click(function () {
-            $(this).animate({ boxShadow: "0px 13px 15px grey"}, 300)
+            $(this).css({ boxShadow: "0px 13px 15px grey"});
             $(this).addClass('clicked');
             $(this).siblings().each(function (j, pic) {
                 $(pic).removeClass('clicked');
-                $(pic).animate({ boxShadow: "none"}, 300)
+                $(pic).css({ boxShadow: "none"})
             });
             $('#image-page > .start-btn').fadeIn(300);
         })
