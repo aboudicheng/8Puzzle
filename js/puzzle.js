@@ -15,7 +15,7 @@ function Puzzle() {
     $('select').change(function () {
         choice = this.selectedIndex;
         if (choice !== 0) {
-            $('#select > .start-btn').fadeIn('slow', function () {
+            $('#select > .start-btn').fadeIn(300, function () {
                 // Start shuffling
                 $(this).click(function () {
                     $('#select').fadeOut('slow');

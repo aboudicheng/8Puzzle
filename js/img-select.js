@@ -10,11 +10,13 @@ function ImageSelect() {
         )
 
         $(item).click(function () {
-            $(this).addClass('clicked', 1000);
+            $(this).animate({ boxShadow: "0px 13px 15px grey"}, 300)
+            $(this).addClass('clicked');
             $(this).siblings().each(function (j, pic) {
-                $(pic).removeClass('clicked', 1000);
+                $(pic).removeClass('clicked');
+                $(pic).animate({ boxShadow: "none"}, 300)
             });
-            $('#image-page > .start-btn').fadeIn('slow');
+            $('#image-page > .start-btn').fadeIn(300);
         })
     })
 
@@ -37,6 +39,7 @@ function ImageSelect() {
                     default: return;
                 }
                 $(item).removeClass('clicked');
+                $(item).css('box-shadow', '0px 0px 0px');
                 $('#image-page > .start-btn').hide();
                 $(item).unbind('mouseenter mouseleave');
             }
