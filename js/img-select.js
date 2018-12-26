@@ -47,6 +47,7 @@ function ImageSelect() {
 
         $('#image-page').animate({ left: -900, opacity: 0 }, 1000, function () {
             $('#image-page').hide(0, function () {
+                $('#select').show();
                 $('#puzzle-page')
                     .show()
                     .animate({ left: 0 }, 1000, function () {

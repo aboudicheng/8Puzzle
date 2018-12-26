@@ -91,6 +91,7 @@ hr {
 
 #select {
     margin: 2em auto;
+    display: none;
 }
 
 select {

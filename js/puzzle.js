@@ -129,31 +129,22 @@ function backtrack(command, speed, callback) {
     y = coord.tileY;
 }
 
+function end() {
+    $('#puzzle').unbind('mouseenter mouseleave');
+    $('.puz').css({ opacity: 0.4, cursor: 'default' });
+    $('#solve-puzzle').hide();
+    $('#congrats').show().animate({ fontSize: '+=20px', bottom: '+=350px' })
+}
+
 //function that backtracks according to the path
 function solve(path) {
     if (path.length > 0) {
         backtrack(path.pop(), 100, function () {
             solve(path);
         })
-
     }
     else {
-        $('#puzzle').unbind('mouseenter mouseleave');
-        $('.puz').css({ opacity: 0.4, cursor: 'default' });
-        $('#solve-puzzle').hide();
-        $('#congrats').show().animate({ fontSize: '+=20px', bottom: '+=350px' })
-
-        $(window).keydown(function (e) {
-            e.preventDefault();
-            if (e.which === 116) {
-                $('#menu').show();
-                $('#puzzle').children().each(function (i, item) { $(item).remove() });
-                $('#puzzle-page').css('left', '-900px').hide();
-                $('#congrats').hide();
-                $('#image-page').css({ left: 0, opacity: 1 });
-                main();
-            }
-        })
+        end();
     }
 }
 
@@ -167,8 +158,7 @@ function animate(path, i, speed) {
     else { //when shuffling finishes
         //If user presses F1
         $(window).keydown(function (e) {
-            e.preventDefault();
-            if (e.which === 112) {
+            if (e.which === 27) {
                 solve(path);
             }
         })
@@ -191,13 +181,15 @@ function animate(path, i, speed) {
 }
 
 function play(path) {
-    console.log(path)
     if (!check()) {
         $('.puz').css({ opacity: 0.4, cursor: 'default' });
         var movables = checkMovables();
         movables.forEach(tile => {
             $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).one('click', function () {
-                traverse(tile.command, 1000, function () {
+                $(this).siblings().each((i, item) => {
+                    $(item).unbind('click');
+                })
+                traverse(tile.command, 500, function () {
                     $('.puz').css({ opacity: 0.4, cursor: 'default' });
                     $(this).css({ opacity: 1.0, cursor: 'pointer' });
                     play(path);
@@ -207,10 +199,7 @@ function play(path) {
         })
     }
     else {
-        $('#puzzle').unbind('mouseenter mouseleave');
-        $('.puz').css({ opacity: 0.4, cursor: 'default' });
-        $('#solve-puzzle').hide();
-        $('#congrats').show().animate({ fontSize: '+=20px', bottom: '+=400px' })
+        end();
     }
 }
 
@@ -226,6 +215,7 @@ function check() {
     return true;
 }
 
+// returns the current possible movements
 function checkMovables() {
     var commands = [];
     if (x + 1 <= 2) {
