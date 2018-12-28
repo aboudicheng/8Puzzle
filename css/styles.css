@@ -107,7 +107,17 @@ select {
 #congrats {
     display: none;
     margin-top: 2em;
-    position: relative;
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
     color:black;
-    font-weight: bold
+    font-weight: bold;
+    font-size: 44px;
+}
+
+#restart {
+    display: none;
+    margin-top: 1em;
+    position: relative;
 }

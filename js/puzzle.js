@@ -131,7 +131,8 @@ function backtrack(command, speed, callback) {
 function end() {
     $('#puzzle').off('mouseenter mouseleave');
     $('#solve-puzzle').hide();
-    $('#congrats').show().animate({ fontSize: '+=20px', bottom: '+=350px' })
+    $('#congrats').show().delay(200).fadeOut(200).fadeIn(200).animate({ fontSize: '+=20px', bottom: '250px' }).animate({ bottom: '-=50px' }).animate({ bottom: '+=50px' });
+    $('#restart').fadeIn(300).delay(700).animate({ fontSize: '+=35px' }).animate({ fontSize: '-=35px' })
 }
 
 //function that backtracks according to the path
