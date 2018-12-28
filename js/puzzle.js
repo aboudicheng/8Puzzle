@@ -13,6 +13,7 @@ var choice; //from select option combo box
 
 function Puzzle() {
     $('select').change(function () {
+        $('#select > .start-btn').off('click');
         choice = this.selectedIndex;
         if (choice !== 0) {
             $('#select > .start-btn').fadeIn(300, function () {
@@ -128,8 +129,7 @@ function backtrack(command, speed, callback) {
 }
 
 function end() {
-    $('#puzzle').unbind('mouseenter mouseleave');
-    $('.puz').css({ opacity: 0.4, cursor: 'default' });
+    $('#puzzle').off('mouseenter mouseleave');
     $('#solve-puzzle').hide();
     $('#congrats').show().animate({ fontSize: '+=20px', bottom: '+=350px' })
 }
@@ -168,7 +168,7 @@ function animate(path, i, speed) {
             },
             function () {
                 if (!check()) {
-                    $('.puz').css('opacity', 1).unbind('click');;
+                    $('.puz').css('opacity', 1).off();
                 }
                 else {
                     $('.puz').css({ opacity: 0.4, cursor: 'default' });
@@ -179,18 +179,14 @@ function animate(path, i, speed) {
 }
 
 function play(path) {
-    console.log(path)
+    $('.puz').off();
+    $('.puz').css({ opacity: 0.4, cursor: 'default' });
     if (!check()) {
-        $('.puz').css({ opacity: 0.4, cursor: 'default' });
         var movables = checkMovables();
         movables.forEach(tile => {
             $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).one('click', function () {
-                $(this).siblings().each((i, item) => {
-                    $(item).unbind('click');
-                })
                 traverse(tile.command, 500, function () {
                     $('.puz').css({ opacity: 0.4, cursor: 'default' });
-                    $(this).css({ opacity: 1.0, cursor: 'pointer' });
                     play(path);
                 })
                 path.push(tile.command);
