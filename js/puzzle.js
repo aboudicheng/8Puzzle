@@ -38,7 +38,7 @@ function Puzzle() {
 
                     var speed = path.length === 30 ? 100 : 1000;
 
-                    animate(path, 0, speed);
+                    animateShuffle(path, 0, speed);
                 })
             });
         }
@@ -148,15 +148,15 @@ function solve(path) {
 }
 
 //Shuffling animation
-function animate(path, i, speed) {
+function animateShuffle(path, i, speed) {
     if (i < path.length) {
         traverse(path[i], speed, function () {
-            animate(path, ++i, speed);
+            animateShuffle(path, ++i, speed);
         })
     }
     else { //when shuffling finishes
         //If user presses F1
-        $(window).one('keydown', function (e) {
+        $(window).on('keydown', function (e) {
             if (e.which === 27) {
                 solve(path);
             }
@@ -187,7 +187,6 @@ function play(path) {
         movables.forEach(tile => {
             $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).one('click', function () {
                 traverse(tile.command, 500, function () {
-                    $('.puz').css({ opacity: 0.4, cursor: 'default' });
                     play(path);
                 })
                 path.push(tile.command);

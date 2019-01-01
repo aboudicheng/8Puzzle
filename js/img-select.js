@@ -16,7 +16,7 @@ function ImageSelect() {
                 $(pic).removeClass('clicked');
                 $(pic).css({ boxShadow: "none"})
             });
-            $('#image-page > .start-btn').fadeIn(300);
+            $('#image-page > .start-btn').fadeIn(500);
         })
     })
 
