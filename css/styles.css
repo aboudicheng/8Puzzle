@@ -83,8 +83,7 @@ hr {
 }
 
 #puzzle {
-  height: 462px;
-  width: 462px;
+  width: 459px;
   margin: 0 auto;
   background-color: rgb(107, 145, 194);
   border: 10px solid #ddd;
