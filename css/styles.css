@@ -1,123 +1,127 @@
-html, body {
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-    font-size: 18px;
-    color:rgb(134, 134, 134);
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+html,
+body {
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  font-size: 18px;
+  color: rgb(134, 134, 134);
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 4em;
 }
 
 hr {
-    width: 50%;
+  width: 50%;
 }
 
 #menu {
-    margin: 7em auto;
+  margin: 7em auto;
 }
 
 #menu-slides {
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .start-btn {
-    border: 1px solid rgb(134, 134, 134);
-    border-radius: 8px;
-    padding: 8px;
-    display: inline-block;
-    cursor: pointer;
-    margin-top: 2em;
-    width: 80px;
+  border: 1px solid rgb(134, 134, 134);
+  border-radius: 8px;
+  padding: 8px;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 2em;
+  width: 80px;
 }
 
 #image-page {
-    position: relative;
+  position: relative;
 }
 
 .image-selection {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: row wrap;
-    height: 150px;
-    margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row wrap;
+  height: 150px;
+  margin: 0 auto;
 }
 
 .img {
-    border-radius: 5px;
-    opacity: 0.7;
-    height: 100px;
-    width: 100px;
-    cursor: pointer;
-    margin: 0 2em;
-    box-shadow: 0px 0px 0px;
-    transition: all ease 0.3s;
+  border-radius: 5px;
+  opacity: 0.7;
+  height: 100px;
+  width: 100px;
+  cursor: pointer;
+  margin: 0 2em;
+  box-shadow: 0px 0px 0px;
+  transition: all ease 0.3s;
 }
 
 .img-1 {
-    background: url('../img/cat.jpg') no-repeat;
-    background-size: cover;
+  background: url("../img/cat.jpg") no-repeat;
+  background-size: cover;
 }
 
 .img-2 {
-    background: url('../img/meow.jpg') no-repeat;
-    background-size: cover;
+  background: url("../img/meow.jpg") no-repeat;
+  background-size: cover;
 }
 
 .img-3 {
-    background: url('../img/pikachu.jpg') no-repeat;
-    background-size: cover;
+  background: url("../img/pikachu.jpg") no-repeat;
+  background-size: cover;
 }
 
 #puzzle-page {
-    position: relative;
-    left: -900px;
-    display: none;
+  position: relative;
+  left: -900px;
+  display: none;
 }
 
 #puzzle {
-    height: 462px;
-    width: 462px;
-    margin: 0 auto;
-    background-color: rgb(107, 145, 194);
-    border: 10px solid #ddd;
+  height: 462px;
+  width: 462px;
+  margin: 0 auto;
+  background-color: rgb(107, 145, 194);
+  border: 10px solid #ddd;
 }
 
 .puz {
-    height: 150px;
-    width: 150px;
-    border-radius: 5px;
-    display: inline-block;
-    margin: 1px;
-    position: relative;
+  height: 150px;
+  width: 150px;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 1px;
+  position: relative;
 }
 
 #select {
-    margin: 2em auto;
-    display: none;
+  margin: 2em auto;
+  display: none;
 }
 
 select {
-    margin: 0 1em;
+  margin: 0 1em;
 }
 
 #congrats {
-    display: none;
-    margin-top: 2em;
-    position: absolute;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    color:black;
-    font-weight: bold;
-    font-size: 44px;
+  display: none;
+  margin-top: 2em;
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  color: black;
+  font-weight: bold;
+  font-size: 44px;
 }
 
 #restart {
-    display: none;
-    margin-top: 1em;
-    position: relative;
+  display: none;
+  margin-top: 1em;
+  position: relative;
 }

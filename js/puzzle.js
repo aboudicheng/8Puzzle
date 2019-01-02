@@ -55,7 +55,6 @@ function Puzzle() {
  * @param {Callback after animate finishes} callback 
  */
 function traverse(command, speed, callback) {
-    $('.puz').css({ opacity: 0.4, cursor: 'default' })
     switch (command) {
         case "right":
             $(`.p${puzzle[x][y + 1]}`).animate({ right: "+=152px" }, speed, function () {
@@ -155,7 +154,7 @@ function animateShuffle(path, i, speed) {
         })
     }
     else { //when shuffling finishes
-        //If user presses F1
+        //If user presses ESC
         $(window).on('keydown', function (e) {
             if (e.which === 27) {
                 solve(path);
@@ -185,7 +184,7 @@ function play(path) {
     if (!check()) {
         var movables = checkMovables();
         movables.forEach(tile => {
-            $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).one('click', function () {
+            $(`.p${puzzle[tile.x][tile.y]}`).css({ opacity: 1.0, cursor: 'pointer' }).click(function () {
                 traverse(tile.command, 500, function () {
                     play(path);
                 })
